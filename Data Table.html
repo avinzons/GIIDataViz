@@ -1,4 +1,3 @@
-<html>	
 	<style>
 		svg {border: solid #ccc 1px;}
 	</style>
@@ -7,7 +6,6 @@
 	<p id="quality-check">
 		
 	</p>
-	<svg height="400" width="600" id="plot1">
 		<!-- Placeholder -->
 	</svg>
 
@@ -56,6 +54,8 @@
 	</script>
 
 	<script id="chart-building">
+	var populate = function () 
+	{
 		// this is the code for the first plot
 		var plot1 = d3.select("#plot1");
 		plot1.append("text")
@@ -71,7 +71,7 @@
 		.domain([-10,10])
 		.range([50, width-50]);
 		var GII_scale = d3.scaleLinear()
-		.domain([10, 75]) //We should change it to d3.max
+		.domain([10, d3.max(innovation_data, function(d) { return d.GII; })]) //We should change it to d3.max
 		.range([height-50, 50]);
 
 		//creating d3 axes
@@ -87,8 +87,6 @@
 		.call(pr_axis);
 
 		console.log(innovation_x_prscore)
-		var populate = function () 
-		{
 				joininnov_x_pr();
 				innovation_x_prscore.forEach(function (country) {
 					plot1.append("circle")
@@ -100,11 +98,10 @@
 						plot1.select("#CountryName").text(country["Name"]);
 					});
 				});
-		}
+	}
 
 		d3.queue()
 		.defer(d3.csv, "political-regime-updated2016.csv", formatYears)
 		.defer(d3.csv, "Country-Data.csv", parseForm)
 		.await(populate);
 	</script>
-</html>
