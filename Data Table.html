@@ -1,0 +1,110 @@
+<html>	
+	<style>
+		svg {border: solid #ccc 1px;}
+	</style>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+	<p id="quality-check">
+		
+	</p>
+	<svg height="400" width="600" id="plot1">
+		<!-- Placeholder -->
+	</svg>
+
+	<script id="data-building">
+		var pr_data = {};
+		var innovation_data = [];
+		var innovation_x_prscore = [];
+
+		var parseForm = function(d) {
+			var country = {};
+			country["Name"] = d[""];
+			country["GII"] = +d[" Global Innovation Index"];
+			country["BS"] = +d["Business sophistication"];
+			country["CO"] = +d["Creative ouputs"];
+			country["HCR"] = +d["Human captial and research"];
+			country["Infrastructure"] = +d["Infrastructure"];
+			country["Institutions"] = +d["Institutions"];
+			country["KTO"] = +d["Knowledge and technology outputs"];
+			country["MS"] = +d["Market sophistication"];
+			innovation_data.push(country);
+		}
+
+		// formatYears generates the pr_data hashmap, with variables we are interested in by specific years. 
+		var formatYears = function(pr){
+			if(pr["Year"] == "2015"){
+				var subcountry = {};
+				subcountry["Code"] = pr["Code"];
+				subcountry["Name"] = pr["Entity"];
+				subcountry["Score"] = +pr["Political Regime (OWID based on Polity IV and Wimmer & Min) (Score)"];
+				pr_data[subcountry["Name"]] = subcountry
+			}
+
+
+		}
+
+		// this code is responsible for doing a join on data from innovation_data and pr_data in O(innovatiation_data.length) time. For easy use in plotting. 
+		var joininnov_x_pr = function () {
+			innovation_data.forEach(function (country) {
+				if(pr_data[country["Name"]]) {
+					value = {"Name" : country["Name"], "GII" : country["GII"], "Score" : pr_data[country["Name"]]["Score"]};
+					innovation_x_prscore.push(value);
+				}
+			})
+		}
+
+	</script>
+
+	<script id="chart-building">
+		// this is the code for the first plot
+		var plot1 = d3.select("#plot1");
+		plot1.append("text")
+		.attr("id", "CountryName")
+		.attr("x", 50)
+		.attr("y", 50)
+		.style("font-size", "24pt");
+
+		var height = +plot1.attr("height");
+		var width = +plot1.attr("width");
+
+		var pr_scale = d3.scaleLinear()
+		.domain([-10,10])
+		.range([50, width-50]);
+		var GII_scale = d3.scaleLinear()
+		.domain([10, 75]) //We should change it to d3.max
+		.range([height-50, 50]);
+
+		//creating d3 axes
+
+		var GII_axis = d3.axisLeft(GII_scale);
+		plot1.append("g")
+		.attr("transform", "translate(300,0)")
+		.call(GII_axis);
+
+		var pr_axis = d3.axisBottom(pr_scale);
+		plot1.append("g")
+		.attr("transform", "translate(0,350)")
+		.call(pr_axis);
+
+		console.log(innovation_x_prscore)
+		var populate = function () 
+		{
+				joininnov_x_pr();
+				innovation_x_prscore.forEach(function (country) {
+					plot1.append("circle")
+					.attr("r", 2)
+					.attr("cx", pr_scale(country["Score"]))
+					.attr("cy", GII_scale(country["GII"]))
+					.style("fill", "black")
+					.on("mouseover", function () {
+						plot1.select("#CountryName").text(country["Name"]);
+					});
+				});
+		}
+
+		d3.queue()
+		.defer(d3.csv, "political-regime-updated2016.csv", formatYears)
+		.defer(d3.csv, "Country-Data.csv", parseForm)
+		.await(populate);
+	</script>
+</html>
