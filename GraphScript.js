@@ -60,10 +60,15 @@ var populate = function ()
 	var GII_scale = d3.scaleLinear()
 	.domain([10, d3.max(innovation_data, function(d) { return d.GII; })]) //We should change it to d3.max
 	.range([height-50, 50]);
+	//Color Scale
+	var colorScaleGII = d3.scaleLinear()
+	.domain([10, d3.max(innovation_data, function(d) { return d.GII; })])
+	.range(["#A5ABAE", "#008AE5"]);
 
 	//creating d3 axes
 
-	var GII_axis = d3.axisLeft(GII_scale);
+	var GII_axis = d3.axisLeft(GII_scale)
+	.tickValues([0,20,40,60]);
 	plot1.append("g")
 	.attr("transform", "translate(300,0)")
 	.call(GII_axis);
@@ -77,12 +82,26 @@ var populate = function ()
 			joininnov_x_pr();
 			innovation_x_prscore.forEach(function (country) {
 				plot1.append("circle")
-				.attr("r", 2)
+				.attr("r", 8)
 				.attr("cx", pr_scale(country["Score"]))
 				.attr("cy", GII_scale(country["GII"]))
-				.style("fill", "black")
+				.style("fill", colorScaleGII(country["GII"]))
+				.style("opacity", .8)
 				.on("mouseover", function () {
 					plot1.select("#CountryName").text(country["Name"]);
+
+				//temporary text labels
+				// if(country["Name"] == "Singapore"){
+				// 	plot1.append("text")
+				// 	// .attr("class", "CountryName")
+				// 	.text(country["Name"]);
+
+				// 	plot1.append("line")
+				// 	.attr("x1", pr_scale(country["Score"]))
+				// 	.attr("x2", pr_scale(country["Score"]))
+				// 	.attr("y1", GII_scale(country["GII"]))
+				// 	.attr("y2", GII_scale(country["GII"]));
+				// }
 				});
 			});
 }
