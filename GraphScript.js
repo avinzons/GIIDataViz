@@ -108,7 +108,6 @@ var populate = function ()
 	.attr("transform", "translate(0,350)")
 	.call(pr_axis);
 
-<<<<<<< HEAD
 	console.log(innovation_x_prscore)
 			joininnov_x_pr();
 			innovation_x_prscore.forEach(function (country) {
@@ -135,20 +134,7 @@ var populate = function ()
 				// }
 				});
 			});
-=======
 	
-	joininnov_x_pr();
-	innovation_x_prscore.forEach(function (country) {
-		plot1.append("circle")
-		.attr("r", 2)
-		.attr("cx", pr_scale(country["Score"]))
-		.attr("cy", GII_scale(country["GII"]))
-		.style("fill", "black")
-		.on("mouseover", function () {
-			plot1.select("#CountryName").text(country["Name"]);
-		});
-	});
->>>>>>> c35b8322ec2a470a8cc9fe50ab0e58a1371424ef
 }
 
 	d3.queue()
