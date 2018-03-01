@@ -91,9 +91,9 @@ var populate = function ()
 	.domain([10, d3.max(innovation_data, function(d) { return d.GII; })]) //We should change it to d3.max
 	.range([height-50, 50]);
 	//Color Scale
-	var colorScaleGII = d3.scaleLinear()
-	.domain([10, d3.max(innovation_data, function(d) { return d.GII; })])
-	.range(["#A5ABAE", "#008AE5"]);
+	var colorScalePR = d3.scaleLinear()
+	.domain([-10,10])
+	.range(["red", "#008AE5"]);
 
 	//creating d3 axes
 
@@ -115,7 +115,7 @@ var populate = function ()
 				.attr("r", 8)
 				.attr("cx", pr_scale(country["Score"]))
 				.attr("cy", GII_scale(country["GII"]))
-				.style("fill", colorScaleGII(country["GII"]))
+				.style("fill", colorScalePR(country["Score"]))
 				.style("opacity", .8)
 				.on("mouseover", function () {
 					plot1.select("#CountryName").text(country["Name"]);
