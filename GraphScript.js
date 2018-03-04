@@ -8,8 +8,8 @@ var parseForm = function(d) {
 	country["Name"] = d[""];
 	country["GII"] = +d[" Global Innovation Index"];
 	country["BS"] = +d["Business sophistication"];
-	country["CO"] = +d["Creative ouputs"];
-	country["HCR"] = +d["Human captial and research"];
+	country["CO"] = +d["Creative outputs"];
+	country["HCR"] = +d["Human capital and research"];
 	country["Infrastructure"] = +d["Infrastructure"];
 	country["Institutions"] = +d["Institutions"];
 	country["KTO"] = +d["Knowledge and technology outputs"];
@@ -34,6 +34,13 @@ var joininnov_x_pr = function () {
 	innovation_data.forEach(function (country) {
 		if(pr_data[country["Name"]]) {
 			value = {"Name" : country["Name"], "GII" : country["GII"], "Score" : pr_data[country["Name"]]["Score"]};
+			value["BS"] = country["BS"]
+			value["CO"] = country["CO"]
+			value["HCR"] = country["HCR"]
+			value["Infrastructure"] = country["Infrastructure"]
+			value["Institutions"] = country["Institutions"]
+			value["KTO"] = country["KTO"]
+			value["MS"] = country["MS"]
 			innovation_x_prscore.push(value);
 		}
 	})
@@ -111,7 +118,6 @@ var populate = function ()
 	.attr("transform", "translate(0,350)")
 	.call(pr_axis);
 
-	console.log(innovation_x_prscore)
 			joininnov_x_pr();
 			innovation_x_prscore.forEach(function (country) {
 				plot1.append("circle")
