@@ -7,11 +7,17 @@
 
 /*javascript d3 realated styling*/
 .graphLabels{
-  font-size: 12;
+  font-size: 16;
+  fill:#fff;
 }
 
-#innovation_x_prscore{
+#plot1 svg{
+  margin: 0 auto;
+}
 
+#plot1 line {
+  stroke: #fff;
+  stroke-width: 2;
 }
 
 
@@ -20,15 +26,7 @@
   height: auto;
 }
 
-.plotAxis g {
-  stroke: #fff;
-}
-
-.plotAxis path{
-  stroke: #fff;
-}
-
-.plotAxis line{
+.plotAxis g, path, line{
   stroke: #fff;
 }
 
@@ -127,12 +125,20 @@
   margin: 80px 0;
   font-size: 20px;
   line-height: 2;
-  background-color: #151617;
+  background-color: #262a30;
 }
 
 .page-body svg{
   margin: 0 auto;
   display: block;
+}
+
+.graph-div{
+  padding: 80px 25%;
+  margin: 80px 0;
+  font-size: 20px;
+  line-height: 2;
+  background-color: #151617;
 }
 
 .footer{

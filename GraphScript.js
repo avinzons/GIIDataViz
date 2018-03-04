@@ -8,8 +8,8 @@ var parseForm = function(d) {
 	country["Name"] = d[""];
 	country["GII"] = +d[" Global Innovation Index"];
 	country["BS"] = +d["Business sophistication"];
-	country["CO"] = +d["Creative ouputs"];
-	country["HCR"] = +d["Human captial and research"];
+	country["CO"] = +d["Creative outputs"];
+	country["HCR"] = +d["Human capital and research"];
 	country["Infrastructure"] = +d["Infrastructure"];
 	country["Institutions"] = +d["Institutions"];
 	country["KTO"] = +d["Knowledge and technology outputs"];
@@ -34,6 +34,13 @@ var joininnov_x_pr = function () {
 	innovation_data.forEach(function (country) {
 		if(pr_data[country["Name"]]) {
 			value = {"Name" : country["Name"], "GII" : country["GII"], "Score" : pr_data[country["Name"]]["Score"]};
+			value["BS"] = country["BS"]
+			value["CO"] = country["CO"]
+			value["HCR"] = country["HCR"]
+			value["Infrastructure"] = country["Infrastructure"]
+			value["Institutions"] = country["Institutions"]
+			value["KTO"] = country["KTO"]
+			value["MS"] = country["MS"]
 			innovation_x_prscore.push(value);
 		}
 	})
@@ -111,10 +118,12 @@ var populate = function ()
 	.attr("transform", "translate(0,350)")
 	.call(pr_axis);
 
-	console.log(innovation_x_prscore)
 			joininnov_x_pr();
+			//countries that will be labeled
+			var textLabels = ["Singapore", "Yemen", "United States", "Switzerland"];
 			innovation_x_prscore.forEach(function (country) {
 				plot1.append("circle")
+				.attr("id", country["Name"])
 				.attr("r", 8)
 				.attr("cx", pr_scale(country["Score"]))
 				.attr("cy", GII_scale(country["GII"]))
@@ -122,22 +131,49 @@ var populate = function ()
 				.style("opacity", .8)
 				.on("mouseover", function () {
 					plot1.select("#CountryName").text(country["Name"]);
+				})
+				
+				if(textLabels.includes(country["Name"])){
+					//highlight country point
+					plot1.select("#"+country["Name"])
+					.attr("stroke", "#fff")
+					.attr("stroke-width", 2);	
 
-				//temporary text labels
-				// if(country["Name"] == "Singapore"){
-				// 	plot1.append("text")
-				// 	// .attr("class", "CountryName")
-				// 	.text(country["Name"]);
+					if(country["Name"] == "Singapore"){
+					var xBuffer = 13;
+					}
 
-				// 	plot1.append("line")
-				// 	.attr("x1", pr_scale(country["Score"]))
-				// 	.attr("x2", pr_scale(country["Score"]))
-				// 	.attr("y1", GII_scale(country["GII"]))
-				// 	.attr("y2", GII_scale(country["GII"]));
-				// }
-				});
+					if(country["Name"] == "Yemen"){
+					var xBuffer = 8;
+					};
+
+					if(country["Name"] == "Switzerland"){
+					var xBuffer = 18;
+					}
+
+					if(country["Name"] == "United States"){	
+					var xBuffer = 22;
+					}
+					plot1.append("text")
+					.attr("class", "graphLabels")
+					.text(country["Name"])
+					.attr("x", pr_scale(country["Score"])-xBuffer*7)
+					.attr("y", GII_scale(country["GII"])+4);
+
+					plot1.append("line")
+					.attr("x1", pr_scale(country["Score"])-8)
+					.attr("x2", pr_scale(country["Score"])-xBuffer*2)
+					.attr("y1", GII_scale(country["GII"]))
+					.attr("y2", GII_scale(country["GII"]));		
+
+					//Unied States plot is hidden
+					plot1.select("#United States")
+					.attr("z-index", 100);
+					
+					
+				}
 			});
-	
+			
 }
 
 	d3.queue()
