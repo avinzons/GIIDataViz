@@ -98,13 +98,15 @@ var populate = function ()
 	//creating d3 axes
 
 	var GII_axis = d3.axisLeft(GII_scale)
-	.tickValues([0,20,40,60]);
+	.tickValues([20,40,60]);
 	plot1.append("g")
+	.attr("class", "plotAxis")
 	.attr("transform", "translate(300,0)")
 	.call(GII_axis);
 
 	var pr_axis = d3.axisBottom(pr_scale);
 	plot1.append("g")
+	.attr("class", "plotAxis")
 	.attr("transform", "translate(0,350)")
 	.call(pr_axis);
 

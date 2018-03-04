@@ -5,8 +5,34 @@
   font-size:100%;
 }
 
+/*javascript d3 realated styling*/
+#innovation_x_prscore{
+
+}
+
+.svg{
+  position: relative;
+  height: auto;
+}
+
+.plotAxis g {
+  stroke: #fff;
+}
+
+.plotAxis path{
+  stroke: #fff;
+}
+
+.plotAxis line{
+  stroke: #fff;
+}
+
 .header{
   height: 90px;
+}
+
+.page-header p{
+  width: 60%;
 }
 
 /*Graph Specific CSS*/
@@ -16,8 +42,8 @@
 
 .nav{
   width: 100%;
-  background-color: #fff;
-  height: 90px;
+  background-color: #151617;
+  height: 60px;
   margin: 0 auto;
 
   align-items: center;
@@ -33,12 +59,7 @@
   display: inline-block;
 }
 
-.svg{
-  position: relative;
-  height: auto;
-}
-
-.nav-title{
+.nav-title {
   width: 60%;
   text-align: center;
   display:inline-block;
@@ -61,9 +82,9 @@
   margin: 0 auto;
 }
 .page-header{
-  padding: 0 50px;
+  padding: 0 50px 60px 40px;
   margin: 0 auto;
-  width: 85%;
+  width: 60%;
 }
 .page-title{
   font-size: 64px;
@@ -97,14 +118,20 @@
 */}
 
 .page-body{
-  padding: 80px 0px;
-  margin: 0 25%;
+  padding: 80px 25%;
+  margin: 80px 0;
   font-size: 20px;
   line-height: 2;
+  background-color: #151617;
+}
+
+.page-body svg{
+  margin: 0 auto;
+  display: block;
 }
 
 .footer{
-  background-color: #262a30;
+  background-color: #151617;
   height: 200px;
   color: #fff;
   display: flex;
@@ -117,7 +144,22 @@
 .footer li{
   list-style: none;
 }
+
+.credits{
+  font-size: 10px;
+}
+
+a:link {
+  color:#fff;
+}
+
+a:visited{
+  color: #fff;
+}
+
 body{
   margin: 0 auto;
   font-family: "Inconsolata";
+  color: #fafafa;
+  background-color: #262a30;
 }
