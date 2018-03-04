@@ -77,9 +77,9 @@ var populate = function ()
 	var plot1 = d3.select("#plot1");
 	plot1.append("text")
 	.attr("id", "CountryName")
+	.attr("class", "graphLabels")
 	.attr("x", 50)
 	.attr("y", 50)
-	.style("font-size", "24pt");
 
 	var height = +plot1.attr("height");
 	var width = +plot1.attr("width");
@@ -103,6 +103,7 @@ var populate = function ()
 	.attr("class", "plotAxis")
 	.attr("transform", "translate(300,0)")
 	.call(GII_axis);
+
 
 	var pr_axis = d3.axisBottom(pr_scale);
 	plot1.append("g")
