@@ -12,8 +12,16 @@ var parseForm = function(d) {
 	country["HCR"] = +d["Human capital and research"];
 	country["Infrastructure"] = +d["Infrastructure"];
 	country["Institutions"] = +d["Institutions"];
-	country["KTO"] = +d["Knowledge and technology outputs"];
 	country["MS"] = +d["Market sophistication"];
+	country["KTO"] = +d["Knowledge and technology outputs"];
+	country["GII"] = +d[" Global Innovation Index(value)"];
+	country["BS"] = +d["Business sophistication(value)"];
+	country["CO"] = +d["Creative outputs(value)"];
+	country["HCR"] = +d["Human capital and research(value)"];
+	country["Infrastructure"] = +d["Infrastructure(value)"];
+	country["Institutions"] = +d["Institutions(value)"];
+	country["MS"] = +d["Market sophistication(value)"];
+	country["KTO"] = +d["Knowledge and technology outputs(value)"];
 	innovation_data.push(country);
 }
 
@@ -215,11 +223,7 @@ var populate = function ()
 					
 				}
 			});
-<<<<<<< HEAD
 	barGraphGenerator("plot2", "", "KTO");
-=======
-			
->>>>>>> 501eee52282b8a17a2c091e480c8c41f76491064
 }
 
 	d3.queue()
