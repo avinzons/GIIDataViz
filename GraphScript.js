@@ -215,7 +215,7 @@ var populate = function ()
 		//Color Scale
 		var colorScalePR = d3.scaleLinear()
 		.domain([-10,10])
-		.range(["red", "#008AE5"]);
+		.range(["#C42E23", "#008AE5"]);
 	
 		//creating the line
 		function make_x_gridlines(){
@@ -349,6 +349,7 @@ var populate = function ()
 	ixpgraph("plot1", 0);
 	ixpgraph("plot2", 1);
 	barGraphGenerator("plot3")
+
 
 }
 
