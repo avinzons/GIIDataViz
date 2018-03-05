@@ -30,6 +30,14 @@
   stroke: #fff;
 }
 
+body{
+  margin: 0 auto;
+  font-family: "Inconsolata";
+  color: #fafafa;
+  background-color: #262a30;
+}
+
+
 .header{
   height: 90px;
 }
@@ -84,11 +92,26 @@
   text-align: left;
   margin: 0 auto;
 }
+
 .page-header{
-  padding: 0 50px 60px 40px;
+  padding-top: 0px;
+  padding-bottom: 40px;
+  width: 100%;
   margin: 0 auto;
+}
+
+.page-header-narrow{
+/*  padding: 0 50px 60px 40px;
+*/  margin: 0 auto;
   width: 60%;
 }
+
+.page-header-wide{
+  padding: 0 50px 60px 40px;
+  margin: 0 auto;
+  width: 90%;
+}
+
 .page-title{
   font-size: 64px;
   line-height: 72px;
@@ -168,9 +191,22 @@ a:visited{
   color: #fff;
 }
 
-body{
+/*subindexes table stles*/
+
+.subindexes table{
   margin: 0 auto;
-  font-family: "Inconsolata";
-  color: #fafafa;
-  background-color: #262a30;
+}
+
+.subindexes th{
+  padding-top: 40px;
+}
+
+.subindexes tr{
+  margin: 0 auto;
+}
+
+.subindexes td{
+  font-size: 12px;
+  width: 300px;
+  padding: 0px 20px;
 }
