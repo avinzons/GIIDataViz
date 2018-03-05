@@ -70,115 +70,58 @@ var joininnov_x_pr = function () {
 }
 
 var avgPolarRegimes = function () {
-	var pTypes = ["democracy", "autocracy", "neither"];
-	pTypes.forEach(function (type) {
+	var prTypes = ["democracy", "autocracy", "neither"];
+	prTypes.forEach(function (type) {
 		avgdata[type] = {};
-		avgdata[type]["GII"] = 0
-		avgdata[type]["IER"] = 0
-		avgdata[type]["IIS"] = 0
-		avgdata[type]["IOS"] = 0
-		avgdata[type]["BS"] = 0
 		avgdata[type]["BS_V"] = 0
-		avgdata[type]["CO"] = 0
 		avgdata[type]["CO_V"] = 0
-		avgdata[type]["HCR"] = 0
 		avgdata[type]["HCR_V"] = 0
-		avgdata[type]["Infrastructure"] = 0
 		avgdata[type]["Infrastructure_V"] = 0
-		avgdata[type]["Institutions"] = 0
 		avgdata[type]["Institutions_V"] = 0
-		avgdata[type]["KTO"] = 0
 		avgdata[type]["KTO_V"] = 0
-		avgdata[type]["MS"] = 0
 		avgdata[type]["MS_V"] = 0
 		avgdata[type]["count"] = 0
 	});
 
 	innovation_x_prscore.reduce(function (tot, country) {
 		if(country["Score"] >= 6){
-			avgdata["democracy"]["GII"] += country["GII"]
-			avgdata["democracy"]["IER"] += country["IER"]
-			avgdata["democracy"]["IIS"] += country["IIS"]
-			avgdata["democracy"]["IOS"] += country["IOS"]
-			avgdata["democracy"]["BS"] += country["BS"]
 			avgdata["democracy"]["BS_V"] += country["BS_V"]
-			avgdata["democracy"]["CO"] += country["CO"]
 			avgdata["democracy"]["CO_V"] += country["CO_V"]
-			avgdata["democracy"]["HCR"] += country["HCR"]
 			avgdata["democracy"]["HCR_V"] += country["HCR_V"]
-			avgdata["democracy"]["Infrastructure"] += country["Infrastructure"]
 			avgdata["democracy"]["Infrastructure_V"] += country["Infrastructure_V"]
-			avgdata["democracy"]["Institutions"] += country["Institutions"]
 			avgdata["democracy"]["Institutions_V"] += country["Institutions_V"]
-			avgdata["democracy"]["KTO"] += country["KTO"]
 			avgdata["democracy"]["KTO_V"] += country["KTO_V"]
-			avgdata["democracy"]["MS"] += country["MS"]
 			avgdata["democracy"]["MS_V"] += country["MS_V"]
 			avgdata["democracy"]["count"] += 1
-
 		}
 		else if(country["Score"] <= -6){
-			avgdata["autocracy"]["GII"] += country["GII"]
-			avgdata["autocracy"]["IER"] += country["IER"]
-			avgdata["autocracy"]["IIS"] += country["IIS"]
-			avgdata["autocracy"]["IOS"] += country["IOS"]
-			avgdata["autocracy"]["BS"] += country["BS"]
 			avgdata["autocracy"]["BS_V"] += country["BS_V"]
-			avgdata["autocracy"]["CO"] += country["CO"]
 			avgdata["autocracy"]["CO_V"] += country["CO_V"]
-			avgdata["autocracy"]["HCR"] += country["HCR"]
 			avgdata["autocracy"]["HCR_V"] += country["HCR_V"]
-			avgdata["autocracy"]["Infrastructure"] += country["Infrastructure"]
 			avgdata["autocracy"]["Infrastructure_V"] += country["Infrastructure_V"]
-			avgdata["autocracy"]["Institutions"] += country["Institutions"]
 			avgdata["autocracy"]["Institutions_V"] += country["Institutions_V"]
-			avgdata["autocracy"]["KTO"] += country["KTO"]
 			avgdata["autocracy"]["KTO_V"] += country["KTO_V"]
-			avgdata["autocracy"]["MS"] += country["MS"]
 			avgdata["autocracy"]["MS_V"] += country["MS_V"]
 			avgdata["autocracy"]["count"] += 1
-
 		}else{
-			avgdata["neither"]["GII"] += country["GII"]
-			avgdata["neither"]["IER"] += country["IER"]
-			avgdata["neither"]["IIS"] += country["IIS"]
-			avgdata["neither"]["IOS"] += country["IOS"]
-			avgdata["neither"]["BS"] += country["BS"]
 			avgdata["neither"]["BS_V"] += country["BS_V"]
-			avgdata["neither"]["CO"] += country["CO"]
 			avgdata["neither"]["CO_V"] += country["CO_V"]
-			avgdata["neither"]["HCR"] += country["HCR"]
 			avgdata["neither"]["HCR_V"] += country["HCR_V"]
-			avgdata["neither"]["Infrastructure"] += country["Infrastructure"]
 			avgdata["neither"]["Infrastructure_V"] += country["Infrastructure_V"]
-			avgdata["neither"]["Institutions"] += country["Institutions"]
 			avgdata["neither"]["Institutions_V"] += country["Institutions_V"]
-			avgdata["neither"]["KTO"] += country["KTO"]
 			avgdata["neither"]["KTO_V"] += country["KTO_V"]
-			avgdata["neither"]["MS"] += country["MS"]
 			avgdata["neither"]["MS_V"] += country["MS_V"]
 			avgdata["neither"]["count"] += 1
 
 		}
 	})
-	pTypes.forEach(function (type){
-		avgdata[type]["GII"] /= avgdata[type]["count"]
-		avgdata[type]["IER"] /= avgdata[type]["count"]
-		avgdata[type]["IIS"] /= avgdata[type]["count"]
-		avgdata[type]["IOS"] /= avgdata[type]["count"]
-		avgdata[type]["BS"] /= avgdata[type]["count"]
+	prTypes.forEach(function (type){
 		avgdata[type]["BS_V"] /= avgdata[type]["count"]
-		avgdata[type]["CO"] /= avgdata[type]["count"]
 		avgdata[type]["CO_V"] /= avgdata[type]["count"]
-		avgdata[type]["HCR"] /= avgdata[type]["count"]
 		avgdata[type]["HCR_V"] /= avgdata[type]["count"]
-		avgdata[type]["Infrastructure"] /= avgdata[type]["count"]
 		avgdata[type]["Infrastructure_V"] /= avgdata[type]["count"]
-		avgdata[type]["Institutions"] /= avgdata[type]["count"]
 		avgdata[type]["Institutions_V"] /= avgdata[type]["count"]
-		avgdata[type]["KTO"] /= avgdata[type]["count"]
 		avgdata[type]["KTO_V"] /= avgdata[type]["count"]
-		avgdata[type]["MS"] /= avgdata[type]["count"]
 		avgdata[type]["MS_V"] /= avgdata[type]["count"]
 	})
 }
