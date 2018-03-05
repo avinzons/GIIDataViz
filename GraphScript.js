@@ -139,7 +139,7 @@ var barGraphGenerator = function (svgelement) {
 
 	var value_scale = d3.scaleLinear()
 	.domain(valuedomain)
-	.range([w_padding*3, (width-w_padding)])
+	.range([w_padding*1.5, (width-w_padding*2)])
 
 	var categories = [];
 	var singlecategories = ["BS_V", "CO_V", "HCR_V", "Infrastructure_V", "Institutions_V", "KTO_V", "MS_V"];
@@ -161,7 +161,7 @@ var barGraphGenerator = function (svgelement) {
 		categories.forEach(function (value, index) {
 			if(index % 2 == 0)
 			{		
-				plot.append("rect")
+				var bar = plot.append("rect")
 				.attr("class", "bar")
 				.attr("id", regime)
 				.attr("id2", value)
@@ -185,7 +185,7 @@ var barGraphGenerator = function (svgelement) {
 	//var categoriesAxis = d3.axisLeft(categories_scale).tickValues(["Business Sophistication","Creative Outputs","Human Capital and Research","Infrastructure","Institutions","Knowledge and Technology Outputs","Market Sophistication"]).tickSize(0);
 	var categoriesAxis = d3.axisLeft(categories_scale).tickValues(singlecategories).tickSize(0);
 	plot.append("g")
-	.attr("transform", "translate("+(w_padding*3)+", 0)")
+	.attr("transform", "translate("+(w_padding*1.5)+", 0)")
 	.call(categoriesAxis);
 }
 
@@ -319,7 +319,6 @@ var populate = function ()
 		if(binary)	
 			{
 				plot1.append("g")
-				.attr("class", "grid")
 				.attr("transform", "translate(0,"+ GII_scale(avgScore) +")")
 				.style("stroke", "orange")
 				.style("stroke-width", 1.5)
