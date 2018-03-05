@@ -1,3 +1,4 @@
+/*red: C42E23*/
 .viewscreen-post{
   margin: 0 auto;
   padding: 0;
@@ -52,7 +53,7 @@
 
 /*Plot 3*/
 .autocracy {
-  fill: red;
+  fill: #C42E23;
   stroke: none;
 }
 
