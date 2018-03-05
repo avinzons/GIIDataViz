@@ -139,7 +139,7 @@ var barGraphGenerator = function (svgelement) {
 
 	var value_scale = d3.scaleLinear()
 	.domain(valuedomain)
-	.range([w_padding, (width-w_padding)])
+	.range([w_padding*3, (width-w_padding)])
 
 	var categories = [];
 	var singlecategories = ["BS_V", "CO_V", "HCR_V", "Infrastructure_V", "Institutions_V", "KTO_V", "MS_V"];
@@ -177,19 +177,15 @@ var barGraphGenerator = function (svgelement) {
 	makeBars("autocracy");
 	makeBars("democracy");
 
-<<<<<<< HEAD
 	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]);
-=======
-	var valueAxis = d3.axisBottom(value_scale);
->>>>>>> 17ab7d12d3f58fe7b26893ff40c9a2a93e3d3ef3
 	plot.append("g")
-	.attr("transform", "translate(0,"+(height-h_padding)+")")
+	.attr("transform", "translate(0,"+(h_padding)+")")
 	.call(valueAxis);
 
 	//var categoriesAxis = d3.axisLeft(categories_scale).tickValues(["Business Sophistication","Creative Outputs","Human Capital and Research","Infrastructure","Institutions","Knowledge and Technology Outputs","Market Sophistication"]).tickSize(0);
 	var categoriesAxis = d3.axisLeft(categories_scale).tickValues(singlecategories).tickSize(0);
 	plot.append("g")
-	.attr("transform", "translate("+w_padding+", 0)")
+	.attr("transform", "translate("+(w_padding*3)+", 0)")
 	.call(categoriesAxis);
 }
 
