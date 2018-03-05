@@ -48,8 +48,7 @@ var joininnov_x_pr = function () {
 
 // TODO: Make a global variable to track all graph elements (Hashmap? Array? TBD)
 var barGraphGenerator = function (svgelement, graphID, rank_category) {
-	var plot = d3.select(svgelement);
-	
+	var plot = d3.select("#"+svgelement);
 	var height = +plot.attr("height");
 	var width = +plot.attr("width");
 	var h_padding = height*.1;
@@ -58,23 +57,42 @@ var barGraphGenerator = function (svgelement, graphID, rank_category) {
 	var maxpr = d3.max(innovation_x_prscore, function (d) { return d["Score"]});
 
 	var pr_scale = d3.scaleLinear()
-	.domain([-maxpr, maxpr])
+	.domain([maxpr, -maxpr])
 	.range([h_padding, (height-h_padding)])
 
-	var rank_scale = d3.scaleLinear()
-	.domain([d3.extent(innovation_x_prscore, function(d) { return d[rank_category]})])
-	.range([w_padding, width-w_padding]);
+	var rank_dom = innovation_x_prscore.sort(function (a, b) { return (a[rank_category] - b[rank_category])})
+	console.log(rank_dom)
+	var rank_scale = d3.scaleBand()
+	.domain(rank_dom.map(function(d) { return d[rank_category]}))
+	.range([w_padding, width-w_padding])
 
 	var pr_axis = d3.axisLeft(pr_scale);
 	plot.append("g")
 	.attr("transform", "translate("+w_padding+",0)")
 	.call(pr_axis);
 
-	var rank_axis = d3.axisBottom(rank_scale);
+	var rank_axis = d3.axisBottom(rank_scale).tickValues([1,127]);
 	plot.append("g")
 	.attr("transform", "translate(0, "+(height/2)+")")
 	.call(rank_axis);
 
+	console.log(innovation_x_prscore[0][rank_category])
+	// Variable height of y-axis value 0 on graph
+	var zp = pr_scale(0)
+
+	plot.selectAll(".bar")
+	.data(innovation_x_prscore)
+	.enter().append("rect")
+		.attr("class", "bar")
+		.attr("id", function(k) { return k[rank_category]})
+		.attr("y", function (k) { 
+			return ((k["Score"] > 0) ? (pr_scale(k["Score"])) : (pr_scale(0)) )})
+		.attr("x", function (k) { return rank_scale(k[rank_category])})
+		.attr("width", (((width-w_padding)/innovation_x_prscore.length)))
+		// TODO, fix the heighthn parameter
+		.attr("height", function(d) {
+			return ((d["Score"] > 0) ? (zp - pr_scale(d["Score"])) : (pr_scale(d["Score"]) - zp))
+		} )
 }
 
 // <script id="chart-building">
@@ -143,7 +161,7 @@ var populate = function ()
 				// }
 				});
 			});
-	
+	barGraphGenerator("plot2", "", "KTO");
 }
 
 	d3.queue()
