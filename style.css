@@ -7,11 +7,17 @@
 
 /*javascript d3 realated styling*/
 .graphLabels{
-  font-size: 12;
+  font-size: 16;
+  fill:#fff;
 }
 
-#innovation_x_prscore{
+#plot1 svg{
+  margin: 0 auto;
+}
 
+#plot1 line {
+  stroke: #fff;
+  stroke-width: 2;
 }
 
 
@@ -20,17 +26,17 @@
   height: auto;
 }
 
-.plotAxis g {
+.plotAxis g, path, line{
   stroke: #fff;
 }
 
-.plotAxis path{
-  stroke: #fff;
+body{
+  margin: 0 auto;
+  font-family: "Inconsolata";
+  color: #fafafa;
+  background-color: #262a30;
 }
 
-.plotAxis line{
-  stroke: #fff;
-}
 
 .header{
   height: 90px;
@@ -86,11 +92,26 @@
   text-align: left;
   margin: 0 auto;
 }
+
 .page-header{
-  padding: 0 50px 60px 40px;
+  padding-top: 0px;
+  padding-bottom: 40px;
+  width: 100%;
   margin: 0 auto;
+}
+
+.page-header-narrow{
+/*  padding: 0 50px 60px 40px;
+*/  margin: 0 auto;
   width: 60%;
 }
+
+.page-header-wide{
+  padding: 0 50px 60px 40px;
+  margin: 0 auto;
+  width: 90%;
+}
+
 .page-title{
   font-size: 64px;
   line-height: 72px;
@@ -127,12 +148,20 @@
   margin: 80px 0;
   font-size: 20px;
   line-height: 2;
-  background-color: #151617;
+  background-color: #262a30;
 }
 
 .page-body svg{
   margin: 0 auto;
   display: block;
+}
+
+.graph-div{
+  padding: 80px 25%;
+  margin: 80px 0;
+/*  font-size: 20px;
+  line-height: 2;*/
+  background-color: #151617;
 }
 
 .footer{
@@ -162,9 +191,37 @@ a:visited{
   color: #fff;
 }
 
-body{
-  margin: 0 auto;
-  font-family: "Inconsolata";
-  color: #fafafa;
-  background-color: #262a30;
+/*subindexes table stles*/
+.subindexes{
+  text-align: center
 }
+
+.subindexes table{
+  margin: 0 auto;
+  border-spacing: 120px 0px;
+}
+
+.subindexes th{
+  padding-top: 40px;
+  padding-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+/*  border-bottom: 1px solid #fff;
+*/margin-bottom: 10px;
+  width: 5%;
+}
+
+.subindexes tr{
+  margin: 0 auto;
+}
+
+.subindexes td{
+  color: #898989;
+  font-size: 12px;
+  width: 300px;
+  padding: 0px 40px;
+}
+
+/*#row2{
+  border-spacing: 120px 0px;
+}*/
