@@ -1,6 +1,3 @@
-#autocracy {
-  fill: #fff;
-}
 .viewscreen-post{
   margin: 0 auto;
   padding: 0;
@@ -25,6 +22,7 @@
   fill: #898989;
   text-anchor:middle;
 }
+/*Plot 1*/
 
 #plot1 svg{
   margin: 0 auto;
@@ -34,11 +32,34 @@
   margin: 20px 50px;
 }
 
+/*Plot 2*/
+#meanLine{
+  stroke: orange;
+  stroke-width: 1.5;
+
+}
+
+.aboveMean{
+  stroke: none;
+  fill: #fff;
+  opacity: .2;
+}
+
 /*#plot1 line {
   stroke: #898989;
   stroke-width: 2;
 }*/
 
+/*Plot 3*/
+.autocracy {
+  fill: red;
+  stroke: none;
+}
+
+.democracy{
+  fill: #008AE5;
+  stroke: none;
+}
 
 .svg{
   position: relative;

@@ -163,9 +163,7 @@ var barGraphGenerator = function (svgelement) {
 			{		
 				var bar = plot.append("rect")
 				.attr("class", "bar")
-				.attr("id", regime)
-				.attr("id2", value)
-				.attr("id3", avgdata[regime][value])
+				.attr("class", regime)
 				.attr("x", value_scale(30))
 				.attr("y", (regime == "autocracy") ? (categories_scale(value+"_A")) : categories_scale(value))
 				.attr("width", value_scale(avgdata[regime][value]) - value_scale(30))
@@ -264,20 +262,39 @@ var populate = function ()
 		.style("text-anchor", "middle")
 		.style("font-size", "20px")
 		.text("Political Regime");
+
+		//add rectangle elemnts to plot 2
+		if(binary){
+			//rectangle highlight on democracy side of plot
+			plot1.append("rect")
+			.attr("class", "aboveMean")
+			.attr("x", pr_scale(6))
+			.attr("y", GII_scale(70))
+			.attr("width", pr_scale(11)-pr_scale(6))
+			.attr("height", GII_scale(avgScore)-GII_scale(70));
+
+			plot1.append("rect")
+			.attr("class", "aboveMean")
+			.attr("x", pr_scale(-11))
+			.attr("y", GII_scale(70))
+			.attr("width", pr_scale(11)-pr_scale(6))
+			.attr("height", GII_scale(avgScore)-GII_scale(70));
+		}
 		
 		//labels for highlighted countries
 		var textLabels = ["Singapore", "Yemen", "United States", "Switzerland"];
 		innovation_x_prscore.forEach(function (country) {
+
 					plot1.append("circle")
 					.attr("id", country["Name"])
 					.attr("r", 8)
 					.attr("cx", pr_scale(country["Score"]))
 					.attr("cy", GII_scale(country["GII"]))
 					.style("fill", colorScalePR(country["Score"]))
-					.style("opacity", .8)
-					.on("mouseover", function () {
-						plot1.select("#CountryName").text(country["Name"]);
-					})
+					.style("opacity", (!binary ) ? (.8) : ( (Math.abs(country["Score"])<6 || country["GII"]<avgScore)?(0.2): (0.8) ));
+					// .on("mouseover", function () {
+					// 	plot1.select("#CountryName").text(country["Name"]);
+					// })
 					
 					if(textLabels.includes(country["Name"])){
 						//highlight country point
@@ -316,17 +333,16 @@ var populate = function ()
 						plot1.select("#United States")
 						.attr("z-index", 100);}
 		
-		//This is used to differentiate plot1 from plot2 without having to repeat all the code	
-		if(binary)	
-			{
-				plot1.append("g")
-				.attr("transform", "translate(0,"+ GII_scale(avgScore) +")")
-				.style("stroke", "orange")
-				.style("stroke-width", 1.5)
-				.call(make_x_gridlines()
-				.tickSize(0)
-				.tickFormat(""))
-			}				
+					//This is used to differentiate plot1 from plot2 without having to repeat all the code	
+					if(binary)	
+						{
+							plot1.append("g")
+							.attr('id', 'meanLine')
+							.attr("transform", "translate(0,"+ GII_scale(avgScore) +")")
+							.call(make_x_gridlines()
+							.tickSize(0)
+							.tickFormat(""))
+						}			
 					
 				})
 			};
