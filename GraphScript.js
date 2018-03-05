@@ -135,7 +135,7 @@ var barGraphGenerator = function (svgelement) {
 	var h_padding = height*.1;
 	var w_padding = width*.1;
 
-	var valuedomain = [0, 80];
+	var valuedomain = [30, 80];
 
 	var value_scale = d3.scaleLinear()
 	.domain(valuedomain)
@@ -156,9 +156,9 @@ var barGraphGenerator = function (svgelement) {
 	// Variable height of y-axis value 0 on graph
 	// var zp = value_scale(0)
 
-	//TODO
-	var makeside = function (regime) {
-		(categories).forEach(function (value, index) {
+	//This code is responsible for creating the 3rd plot- using barGraphGenerator()
+	var makeBars = function (regime) {
+		categories.forEach(function (value, index) {
 			if(index % 2 == 0)
 			{		
 				console.log(avgdata[regime][value])
@@ -167,23 +167,23 @@ var barGraphGenerator = function (svgelement) {
 				.attr("id", regime)
 				.attr("id2", value)
 				.attr("id3", avgdata[regime][value])
-				.attr("x", value_scale(0))
+				.attr("x", value_scale(30))
 				.attr("y", (regime == "autocracy") ? (categories_scale(value+"_A")) : categories_scale(value))
-				.attr("width", value_scale(avgdata[regime][value]) - value_scale(0))
+				.attr("width", value_scale(avgdata[regime][value]) - value_scale(30))
 				.attr("height", categories_scale.bandwidth())
 			}
 		})
 	}
-	
 
-	makeside("autocracy");
-	makeside("democracy");
+	makeBars("autocracy");
+	makeBars("democracy");
 
-	var valueAxis = d3.axisTop(value_scale);
+	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]);
 	plot.append("g")
 	.attr("transform", "translate(0,"+(h_padding)+")")
 	.call(valueAxis);
 
+	//var categoriesAxis = d3.axisLeft(categories_scale).tickValues(["Business Sophistication","Creative Outputs","Human Capital and Research","Infrastructure","Institutions","Knowledge and Technology Outputs","Market Sophistication"]).tickSize(0);
 	var categoriesAxis = d3.axisLeft(categories_scale).tickValues(singlecategories).tickSize(0);
 	plot.append("g")
 	.attr("transform", "translate("+w_padding+", 0)")
@@ -197,7 +197,7 @@ var populate = function ()
 	innovation_x_prscore.reduce(function (total, num) { avgScore += num["GII"] });
 	avgScore /= innovation_x_prscore.length;
 	avgPolarRegimes(avgScore);
-	var ixpgraph = function (graphID, binary) {// this is the code for the first plot
+	var ixpgraph = function (graphID, binary) { // this is the code for the first plot
 		var plot1 = d3.select("#"+graphID);
 		plot1.append("text")
 		.attr("id", "CountryName")
@@ -212,7 +212,7 @@ var populate = function ()
 		.domain([-10,10])
 		.range([50, width-50]);
 		var GII_scale = d3.scaleLinear()
-		.domain([10, d3.max(innovation_data, function(d) { return d.GII; })]) //We should change it to d3.max
+		.domain([10, d3.max(innovation_data, function(d) { return d.GII; })]) 
 		.range([height-50, 50]);
 		//Color Scale
 		var colorScalePR = d3.scaleLinear()
@@ -225,8 +225,7 @@ var populate = function ()
 				.ticks(1)
 		}
 
-		//creating d3 axes
-	
+		//creating d3 axes for the 1st plot
 		var GII_axis = d3.axisLeft(GII_scale)
 		.tickValues([20,40,60]);
 		plot1.append("g")
@@ -241,6 +240,7 @@ var populate = function ()
 		.attr("transform", "translate(0,350)")
 		.call(pr_axis);
 	
+		//axes labels for the 1st graph
 		plot1.append("text")
 		.attr("class", "graphLabels")
 		.attr("x", 550)
@@ -264,7 +264,8 @@ var populate = function ()
 		.style("text-anchor", "middle")
 		.style("font-size", "20px")
 		.text("Political Regime");
-	
+		
+		//labels for highlighted countries
 		var textLabels = ["Singapore", "Yemen", "United States", "Switzerland"];
 		innovation_x_prscore.forEach(function (country) {
 					plot1.append("circle")
@@ -314,29 +315,29 @@ var populate = function ()
 						//Unied States plot is hidden
 						plot1.select("#United States")
 						.attr("z-index", 100);}
-					
+		
+		//This is used to differentiate plot1 from plot2 without having to repeat all the code	
 		if(binary)	
 			{
 				plot1.append("g")
 				.attr("class", "grid")
 				.attr("transform", "translate(0,"+ GII_scale(avgScore) +")")
-				.style("fill", "orange")
-				.style("stroke-width", 2)
+				.style("stroke", "orange")
+				.style("stroke-width", 1.5)
 				.call(make_x_gridlines()
 				.tickSize(0)
 				.tickFormat(""))
 			}				
-			//countries that will be labeled
 					
 				})
 			};
 	ixpgraph("plot1", 0);
 	ixpgraph("plot2", 1);
-	barGraphGenerator("plot3", "", "")
+	barGraphGenerator("plot3")
 
 }
 
-	d3.queue()
-	.defer(d3.csv, "political-regime-updated2016.csv", formatYears)
-	.defer(d3.csv, "Country-Data2.csv", parseForm)
-	.await(populate);
+d3.queue()
+.defer(d3.csv, "political-regime-updated2016.csv", formatYears)
+.defer(d3.csv, "Country-Data2.csv", parseForm)
+.await(populate);
