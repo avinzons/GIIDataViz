@@ -119,27 +119,21 @@ var populate = function ()
 	.call(pr_axis);
 
 	plot1.append("text")
-	.attr("class", "graphLabels")
+	.attr("class", "axisLabels")
 	.attr("x", 550)
 	.attr("y", 385)
-	.style("text-anchor", "middle")
-	.style("font-size", "14px")
 	.text("full democracy");
 
 	plot1.append("text")
-	.attr("class", "graphLabels")
+	.attr("class", "axisLabels")
 	.attr("x", 50)
 	.attr("y", 385)
-	.style("text-anchor", "middle")
-	.style("font-size", "14px")
 	.text("full autocracy");
 
 	plot1.append("text")
-	.attr("class", "graphLabels")
+	.attr("class", "axisTitle")
 	.attr("x", 310)
 	.attr("y", 390)
-	.style("text-anchor", "middle")
-	.style("font-size", "20px")
 	.text("Political Regime");
 
 			joininnov_x_pr();
@@ -164,7 +158,7 @@ var populate = function ()
 					.attr("stroke-width", 2);	
 
 					if(country["Name"] == "Singapore"){
-					var xBuffer = 13;
+					var xBuffer = 18;
 					}
 
 					if(country["Name"] == "Yemen"){
@@ -185,6 +179,7 @@ var populate = function ()
 					.attr("y", GII_scale(country["GII"])+4);
 
 					plot1.append("line")
+					.attr("class", "graphLabelLine")
 					.attr("x1", pr_scale(country["Score"])-8)
 					.attr("x2", pr_scale(country["Score"])-xBuffer*2)
 					.attr("y1", GII_scale(country["GII"]))
@@ -193,9 +188,8 @@ var populate = function ()
 					//Unied States plot is hidden
 					plot1.select("#United States")
 					.attr("z-index", 100);
-					
-					
 				}
+
 			});
 			
 }
