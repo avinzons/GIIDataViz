@@ -142,11 +142,17 @@ var barGraphGenerator = function (svgelement) {
 	.range([w_padding*1.5, (width-w_padding*2)])
 
 	var categories = [];
+	var pseudocategories = ["Business Sophistication", "Creative Outputs", "Human Capital and Research", "Infrastructure", "Institutions", "Knowledge Technology Variable", "Market Sophistication"]
 	var singlecategories = ["BS_V", "CO_V", "HCR_V", "Infrastructure_V", "Institutions_V", "KTO_V", "MS_V"];
 	singlecategories.forEach(function (d) {
 		categories.push(d);
 		categories.push(d+"_A")
 	})
+
+	var categories_pseudoscale = d3.scaleBand()
+	.domain(pseudocategories.map(function (d) { return d; }))
+	.range([h_padding, height-h_padding])
+	.padding(.1)
 
 	var categories_scale = d3.scaleBand()
 	.domain(categories.map(function (d) { return d; }))
@@ -168,24 +174,29 @@ var barGraphGenerator = function (svgelement) {
 				.attr("y", (regime == "autocracy") ? (categories_scale(value+"_A")) : categories_scale(value))
 				.attr("width", value_scale(avgdata[regime][value]) - value_scale(30))
 				.attr("height", categories_scale.bandwidth())
-			}
+			} 
 		})
 	}
 
 	makeBars("autocracy");
 	makeBars("democracy");
 
-	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]).tickSize(0);
+	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]);
 	plot.append("g")
 	.attr("transform", "translate(0,"+(h_padding)+")")
 	.style("stroke-width", 0)
 	.call(valueAxis);
 
-	//var categoriesAxis = d3.axisLeft(categories_scale).tickValues(["Business Sophistication","Creative Outputs","Human Capital and Research","Infrastructure","Institutions","Knowledge and Technology Outputs","Market Sophistication"]).tickSize(0);
+	var pseudoCatAxis = d3.axisLeft(categories_pseudoscale).tickValues(pseudocategories).tickSize(0);
 	var categoriesAxis = d3.axisLeft(categories_scale).tickValues(singlecategories).tickSize(0);
 	plot.append("g")
 	.attr("transform", "translate("+(w_padding*1.5)+", 0)")
+	.style("visibility", "hidden")
 	.call(categoriesAxis);
+	plot.append("g")
+	.attr("class", "accessLabels")
+	.attr("transform", "translate("+(w_padding*1.5)+", 0)")
+	.call(pseudoCatAxis);
 }
 
 var populate = function () 
@@ -197,18 +208,13 @@ var populate = function ()
 	avgPolarRegimes(avgScore);
 	var ixpgraph = function (graphID, binary) { // this is the code for the first plot
 		var plot1 = d3.select("#"+graphID);
-		plot1.append("text")
-		.attr("id", "CountryName")
-		.attr("class", "graphLabels")
-		.attr("x", 50)
-		.attr("y", 50)
 	
 		var height = +plot1.attr("height");
 		var width = +plot1.attr("width");
 	
 		var pr_scale = d3.scaleLinear()
 		.domain([-10,10])
-		.range([50, width-50]);
+		.range([(1/12)*width, width-((1/12)*width)]);
 
 		var mean_scale = d3.scaleLinear()
 		.domain([-10,10])
@@ -230,7 +236,7 @@ var populate = function ()
 
 		//creating d3 axes for the 1st plot
 		var GII_axis = d3.axisLeft(GII_scale)
-		.tickValues([20,40,60]);
+		.tickValues([20,40,60]).tickSize(0);
 		plot1.append("g")
 		.attr("class", "plotAxis")
 		.attr("transform", "translate(300,0)")
@@ -293,7 +299,7 @@ var populate = function ()
 					plot1.append("circle")
 					.attr("id", country["Name"])
 					.attr("r", 8)
-					.attr("cx", pr_scale(country["Score"]))
+					.attr("cx", (country["Score"] >= 6) ? (pr_scale(country["Score"]) + Math.random()*(width*.02)) : (pr_scale(country["Score"])))
 					.attr("cy", GII_scale(country["GII"]))
 					.style("fill", colorScalePR(country["Score"]))
 					.style("opacity", (!binary ) ? (.8) : ( (Math.abs(country["Score"])<6 || country["GII"]<avgScore)?(0.2): (0.8) ));
