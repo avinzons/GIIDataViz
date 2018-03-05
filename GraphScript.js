@@ -4,7 +4,6 @@ var innovation_data = [];
 var innovation_x_prscore = [];
 var avgdata = {};
 
-
 var parseForm = function(d) {
 	var country = {};
 	country["Name"] = d[""];
@@ -69,7 +68,7 @@ var joininnov_x_pr = function () {
 	})
 }
 
-var avgPolarRegimes = function () {
+var avgPolarRegimes = function (avgScore) {
 	var prTypes = ["democracy", "autocracy", "neither"];
 	prTypes.forEach(function (type) {
 		avgdata[type] = {};
@@ -84,7 +83,7 @@ var avgPolarRegimes = function () {
 	});
 
 	innovation_x_prscore.reduce(function (tot, country) {
-		if(country["Score"] >= 6){
+		if(country["Score"] >= 6 && country["GII"] >= avgScore){
 			avgdata["democracy"]["BS_V"] += country["BS_V"]
 			avgdata["democracy"]["CO_V"] += country["CO_V"]
 			avgdata["democracy"]["HCR_V"] += country["HCR_V"]
@@ -94,7 +93,7 @@ var avgPolarRegimes = function () {
 			avgdata["democracy"]["MS_V"] += country["MS_V"]
 			avgdata["democracy"]["count"] += 1
 		}
-		else if(country["Score"] <= -6){
+		else if(country["Score"] <= -6 && country["GII"] >= avgScore){
 			avgdata["autocracy"]["BS_V"] += country["BS_V"]
 			avgdata["autocracy"]["CO_V"] += country["CO_V"]
 			avgdata["autocracy"]["HCR_V"] += country["HCR_V"]
@@ -136,15 +135,21 @@ var barGraphGenerator = function (svgelement) {
 	var h_padding = height*.1;
 	var w_padding = width*.1;
 
-	var valuedomain = [-80, 80];
+	var valuedomain = [0, 80];
 
 	var value_scale = d3.scaleLinear()
 	.domain(valuedomain)
 	.range([w_padding, (width-w_padding)])
 
-	var rank_dom = ["BS_V", "CO_V", "HCR_V", "Infrastructure_V", "Institutions_V", "KTO_V", "MS_V"];
+	var categories = [];
+	var singlecategories = ["BS_V", "CO_V", "HCR_V", "Infrastructure_V", "Institutions_V", "KTO_V", "MS_V"];
+	singlecategories.forEach(function (d) {
+		categories.push(d);
+		categories.push(d+"_A")
+	})
+
 	var categories_scale = d3.scaleBand()
-	.domain(rank_dom.map(function (d) { return d; }))
+	.domain(categories.map(function (d) { return d; }))
 	.range([h_padding, height-h_padding])
 	.padding(.1)
 
@@ -153,17 +158,23 @@ var barGraphGenerator = function (svgelement) {
 
 	//TODO
 	var makeside = function (regime) {
-		(rank_dom).forEach(function (value) {
-			plot.append("rect")
-			.attr("class", "bar")
-			.attr("id", regime)
-			.attr("id2", value)
-			.attr("x", (regime == "autocracy") ? (value_scale(-avgdata[regime][value])) : (value_scale(0)))
-			.attr("y", categories_scale(value))
-			.attr("width", (regime == "autocracy") ? (value_scale(0) - value_scale(-avgdata[regime][value])) : ((value_scale(avgdata[regime][value])) - value_scale(0)))
-			.attr("height", categories_scale.bandwidth())
+		(categories).forEach(function (value, index) {
+			if(index % 2 == 0)
+			{		
+				console.log(avgdata[regime][value])
+				plot.append("rect")
+				.attr("class", "bar")
+				.attr("id", regime)
+				.attr("id2", value)
+				.attr("id3", avgdata[regime][value])
+				.attr("x", value_scale(0))
+				.attr("y", (regime == "autocracy") ? (categories_scale(value+"_A")) : categories_scale(value))
+				.attr("width", value_scale(avgdata[regime][value]) - value_scale(0))
+				.attr("height", categories_scale.bandwidth())
+			}
 		})
 	}
+	
 
 	makeside("autocracy");
 	makeside("democracy");
@@ -173,16 +184,19 @@ var barGraphGenerator = function (svgelement) {
 	.attr("transform", "translate(0,"+(h_padding)+")")
 	.call(valueAxis);
 
-	var categoriesAxis = d3.axisLeft(categories_scale).tickValues([]).tickSize(0);
+	var categoriesAxis = d3.axisLeft(categories_scale).tickValues(singlecategories).tickSize(0);
 	plot.append("g")
-	.attr("transform", "translate("+(width/2)+", 0)")
+	.attr("transform", "translate("+w_padding+", 0)")
 	.call(categoriesAxis);
 }
 
 var populate = function () 
 {
 	joininnov_x_pr();
-	avgPolarRegimes();
+	var avgScore = 0
+	innovation_x_prscore.reduce(function (total, num) { avgScore += num["GII"] });
+	avgScore /= innovation_x_prscore.length;
+	avgPolarRegimes(avgScore);
 	var ixpgraph = function (graphID, binary) {// this is the code for the first plot
 		var plot1 = d3.select("#"+graphID);
 		plot1.append("text")
@@ -305,7 +319,7 @@ var populate = function ()
 			{
 				plot1.append("g")
 				.attr("class", "grid")
-				.attr("transform", "translate(0,"+ height/2 +")")
+				.attr("transform", "translate(0,"+ GII_scale(avgScore) +")")
 				.style("fill", "orange")
 				.style("stroke-width", 2)
 				.call(make_x_gridlines()
