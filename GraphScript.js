@@ -209,6 +209,11 @@ var populate = function ()
 		var pr_scale = d3.scaleLinear()
 		.domain([-10,10])
 		.range([50, width-50]);
+
+		var mean_scale = d3.scaleLinear()
+		.domain([-10,10])
+		.range([pr_scale(-11), pr_scale(11)]);
+
 		var GII_scale = d3.scaleLinear()
 		.domain([10, d3.max(innovation_data, function(d) { return d.GII; })]) 
 		.range([height-50, 50]);
@@ -219,7 +224,7 @@ var populate = function ()
 	
 		//creating the line
 		function make_x_gridlines(){
-			return d3.axisBottom(pr_scale)
+			return d3.axisBottom(mean_scale)
 				.ticks(1)
 		}
 
