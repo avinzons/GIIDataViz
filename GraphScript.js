@@ -177,9 +177,10 @@ var barGraphGenerator = function (svgelement) {
 	makeBars("autocracy");
 	makeBars("democracy");
 
-	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]);
+	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]).tickSize(0);
 	plot.append("g")
 	.attr("transform", "translate(0,"+(h_padding)+")")
+	.style("stroke-width", 0)
 	.call(valueAxis);
 
 	//var categoriesAxis = d3.axisLeft(categories_scale).tickValues(["Business Sophistication","Creative Outputs","Human Capital and Research","Infrastructure","Institutions","Knowledge and Technology Outputs","Market Sophistication"]).tickSize(0);
