@@ -186,14 +186,14 @@ var avgPolarRegimes = function () {
 
 
 // TODO: Make a global variable to track all graph elements (Hashmap? Array? TBD)
-var barGraphGenerator = function (svgelement, rank_category, rank_value) {
+var barGraphGenerator = function (svgelement) {
 	var plot = d3.select("#"+svgelement);
 	var height = +plot.attr("height");
 	var width = +plot.attr("width");
 	var h_padding = height*.1;
 	var w_padding = width*.1;
 
-	var valuedomain = [-100, 100];
+	var valuedomain = [-80, 80];
 
 	var value_scale = d3.scaleLinear()
 	.domain(valuedomain)
@@ -203,16 +203,7 @@ var barGraphGenerator = function (svgelement, rank_category, rank_value) {
 	var categories_scale = d3.scaleBand()
 	.domain(rank_dom.map(function (d) { return d; }))
 	.range([h_padding, height-h_padding])
-
-	var valueAxis = d3.axisBottom(value_scale);
-	plot.append("g")
-	.attr("transform", "translate(0,"+(h_padding)+")")
-	.call(valueAxis);
-
-	var categoriesAxis = d3.axisLeft(categories_scale);
-	plot.append("g")
-	.attr("transform", "translate("+(width/2)+", 0)")
-	.call(categoriesAxis);
+	.padding(.1)
 
 	// Variable height of y-axis value 0 on graph
 	// var zp = value_scale(0)
@@ -223,27 +214,26 @@ var barGraphGenerator = function (svgelement, rank_category, rank_value) {
 			plot.append("rect")
 			.attr("class", "bar")
 			.attr("id", regime)
-			.attr("id2", avgdata[regime][value])
-			.attr("x", (regime == "autocracy") ? (value_scale(-(avgdata[regime][value]))) : (value_scale(0)))
+			.attr("id2", value)
+			.attr("x", (regime == "autocracy") ? (value_scale(-avgdata[regime][value])) : (value_scale(0)))
 			.attr("y", categories_scale(value))
-			.attr("width", value_scale(-(avgdata[regime][value])))
-			.attr("height", (((height-h_padding)/rank_dom.length)-(height-h_padding)*.05))
+			.attr("width", (regime == "autocracy") ? (value_scale(0) - value_scale(-avgdata[regime][value])) : ((value_scale(avgdata[regime][value])) - value_scale(0)))
+			.attr("height", categories_scale.bandwidth())
 		})
 	}
+
 	makeside("autocracy");
 	makeside("democracy");
 
-// 	plot.selectAll(".bar")
-// 	.data(rank_dom)
-// 	.enter().append("rect")
-// 		.attr("class", "bar")
-// 		.attr("id", function(k) { return k[rank_category]})
-// 		.attr("y", function (k) { 
-// 			return ((k["Score"] > 0) ? (value_scale(k["Score"])) : (value_scale(0)) )})
-// 		.attr("x", function (k) { return categories_scale(k[rank_category])})
-// 		.attr("width", )
-// 		// TODO, fix the heighthn parameter
-// 		.attr("height", (((height-h_padding)/rank_dom.length)) )
+	var valueAxis = d3.axisTop(value_scale);
+	plot.append("g")
+	.attr("transform", "translate(0,"+(h_padding)+")")
+	.call(valueAxis);
+
+	var categoriesAxis = d3.axisLeft(categories_scale).tickValues([]).tickSize(0);
+	plot.append("g")
+	.attr("transform", "translate("+(width/2)+", 0)")
+	.call(categoriesAxis);
 }
 
 var populate = function () 
