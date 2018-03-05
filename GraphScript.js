@@ -161,7 +161,6 @@ var barGraphGenerator = function (svgelement) {
 		categories.forEach(function (value, index) {
 			if(index % 2 == 0)
 			{		
-				console.log(avgdata[regime][value])
 				plot.append("rect")
 				.attr("class", "bar")
 				.attr("id", regime)
@@ -178,9 +177,13 @@ var barGraphGenerator = function (svgelement) {
 	makeBars("autocracy");
 	makeBars("democracy");
 
+<<<<<<< HEAD
 	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]);
+=======
+	var valueAxis = d3.axisBottom(value_scale);
+>>>>>>> 17ab7d12d3f58fe7b26893ff40c9a2a93e3d3ef3
 	plot.append("g")
-	.attr("transform", "translate(0,"+(h_padding)+")")
+	.attr("transform", "translate(0,"+(height-h_padding)+")")
 	.call(valueAxis);
 
 	//var categoriesAxis = d3.axisLeft(categories_scale).tickValues(["Business Sophistication","Creative Outputs","Human Capital and Research","Infrastructure","Institutions","Knowledge and Technology Outputs","Market Sophistication"]).tickSize(0);
