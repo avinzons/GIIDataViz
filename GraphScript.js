@@ -226,7 +226,7 @@ var barGraphGenerator = function (svgelement, rank_category, rank_value) {
 			.attr("id2", avgdata[regime][value])
 			.attr("x", (regime == "autocracy") ? (value_scale(-(avgdata[regime][value]))) : (value_scale(0)))
 			.attr("y", categories_scale(value))
-			.attr("width", value_scale(avgdata[regime][value]))
+			.attr("width", value_scale(-(avgdata[regime][value])))
 			.attr("height", (((height-h_padding)/rank_dom.length)-(height-h_padding)*.05))
 		})
 	}

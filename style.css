@@ -9,16 +9,32 @@
 .graphLabels{
   font-size: 16;
   fill:#fff;
+  }
+
+.axisLabels{
+  font-size:14px;
+  fill: #898989;
+  text-anchor:middle;
+}
+
+.axisTitle{
+  font-size:20px;
+  fill: #898989;
+  text-anchor:middle;
 }
 
 #plot1 svg{
   margin: 0 auto;
 }
 
-#plot1 line {
-  stroke: #fff;
-  stroke-width: 2;
+#innovation_x_prscore svg{
+  margin: 20px 50px;
 }
+
+/*#plot1 line {
+  stroke: #898989;
+  stroke-width: 2;
+}*/
 
 
 .svg{
@@ -27,14 +43,21 @@
 }
 
 .plotAxis g, path, line{
-  stroke: #fff;
+  stroke: #898989;
 }
+
+.graphLabelLine {
+    stroke: #fff;
+    stroke-width: 2px;
+  }
+
 
 body{
   margin: 0 auto;
   font-family: "Inconsolata";
   color: #fafafa;
   background-color: #262a30;
+  text-align: center;
 }
 
 
@@ -56,6 +79,7 @@ body{
   background-color: #151617;
   height: 60px;
   margin: 0 auto;
+  opacity: .8;
 
   align-items: center;
   transition: background-color .2s;
@@ -119,7 +143,7 @@ body{
   font-weight: 200;
 }
 .page-subtitle{
-  margin: 30px 0 48px 0;
+  margin-top: 30px;
   display: inline-block;
   font-size: 20px;
   font-weight: lighter;
@@ -198,12 +222,11 @@ a:visited{
 
 .subindexes table{
   margin: 0 auto;
-  border-spacing: 120px 0px;
+  border-spacing: 140px 0px;
 }
 
 .subindexes th{
   padding-top: 40px;
-  padding-bottom: 10px;
   margin-left: 20px;
   margin-right: 20px;
 /*  border-bottom: 1px solid #fff;
@@ -212,16 +235,16 @@ a:visited{
 }
 
 .subindexes tr{
-  margin: 0 auto;
+  padding-top:60px;
 }
 
 .subindexes td{
   color: #898989;
   font-size: 12px;
   width: 300px;
-  padding: 0px 40px;
+  padding: 5px 60px;
 }
 
-/*#row2{
-  border-spacing: 120px 0px;
-}*/
+#row2{
+  border-spacing: 80px 0px;
+}
