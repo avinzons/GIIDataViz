@@ -118,6 +118,30 @@ var populate = function ()
 	.attr("transform", "translate(0,350)")
 	.call(pr_axis);
 
+	plot1.append("text")
+	.attr("class", "graphLabels")
+	.attr("x", 550)
+	.attr("y", 385)
+	.style("text-anchor", "middle")
+	.style("font-size", "14px")
+	.text("full democracy");
+
+	plot1.append("text")
+	.attr("class", "graphLabels")
+	.attr("x", 50)
+	.attr("y", 385)
+	.style("text-anchor", "middle")
+	.style("font-size", "14px")
+	.text("full autocracy");
+
+	plot1.append("text")
+	.attr("class", "graphLabels")
+	.attr("x", 310)
+	.attr("y", 390)
+	.style("text-anchor", "middle")
+	.style("font-size", "20px")
+	.text("Political Regime");
+
 			joininnov_x_pr();
 			//countries that will be labeled
 			var textLabels = ["Singapore", "Yemen", "United States", "Switzerland"];
