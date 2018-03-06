@@ -25,12 +25,8 @@
 }
 /*Plot 1*/
 
-#plot1 svg{
-  margin: 0 auto;
-}
-
-#innovation_x_prscore svg{
-  margin: 20px 50px;
+#plot1{
+  margin: 0px auto 40px auto;
 }
 
 /*Plot 2*/
@@ -74,8 +70,11 @@
 .graphLabelLine {
     stroke: #fff;
     stroke-width: 2px;
-  }
+}
 
+.barGroup{
+  padding: 0px 10px 0px 10px;
+}
 
 body{
   margin: 0 auto;
@@ -83,15 +82,6 @@ body{
   color: #fafafa;
   background-color: #262a30;
   text-align: center;
-}
-
-
-.header{
-  height: 90px;
-}
-
-.page-header p{
-  width: 60%;
 }
 
 /*Graph Specific CSS*/
@@ -137,8 +127,7 @@ body{
   display: inline-block;
 }
 .page{
-  padding-top: 100px;
-  text-align: left;
+  text-align: center;
   margin: 0 auto;
 }
 
@@ -162,13 +151,13 @@ body{
 }
 
 .page-title{
-  font-size: 64px;
-  line-height: 72px;
+  font-size: 48px;
+  line-height: 64px;
   letter-spacing: -5px;
   font-weight: 200;
 }
 .page-subtitle{
-  margin-top: 30px;
+  margin: 60px auto 0 auto;
   display: inline-block;
   font-size: 20px;
   font-weight: lighter;
@@ -203,6 +192,15 @@ body{
 .page-body svg{
   margin: 0 auto;
   display: block;
+}
+
+.header{
+  height: 60px;
+}
+
+.body-text{
+  width: 60%;
+  margin: 0 auto;
 }
 
 .graph-div{
@@ -242,34 +240,19 @@ a:visited{
 
 /*subindexes table stles*/
 .subindexes{
-  text-align: center
-}
-
-.subindexes table{
+  text-align: left;
+  width: 50%;
   margin: 0 auto;
-  border-spacing: 140px 0px;
 }
 
-.subindexes th{
-  padding-top: 40px;
-  margin-left: 20px;
-  margin-right: 20px;
-/*  border-bottom: 1px solid #fff;
-*/margin-bottom: 10px;
-  width: 5%;
+.subindexes .indexName{
+
 }
 
-.subindexes tr{
-  padding-top:60px;
-}
-
-.subindexes td{
+.subindexes .description{
   color: #898989;
   font-size: 12px;
   width: 300px;
-  padding: 5px 60px;
-}
-
-#row2{
-  border-spacing: 80px 0px;
+  margin: 0;
+  padding: 0 0 20px 0;
 }
