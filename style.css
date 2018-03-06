@@ -18,8 +18,6 @@
   text-anchor:middle;
 }
 
-
-
 .axisTitle{
   font-size:20px;
   fill: #898989;
@@ -31,7 +29,16 @@
   margin: 0px auto 40px auto;
 }
 
+.labelStyle{
+  stroke: #fff;
+  stroke-width: 2px;
+}
+
 /*Plot 2*/
+#plot2{
+  margin: 0px auto 40px auto;
+}
+
 #meanLine{
   stroke: orange;
   stroke-width: 1.5;
@@ -41,7 +48,7 @@
 .aboveMean{
   stroke: none;
   fill: #fff;
-  opacity: .2;
+  opacity: .1;
 }
 
 /*#plot1 line {
@@ -51,7 +58,13 @@
 
 /*Plot 3*/
 #plot3{
-  text-anchor: end;
+  margin: 0px auto 0px auto;
+}
+
+#plot3 .axisLabels{
+  font-size:14px;
+  fill: #898989;
+  text-anchor:end;
 }
 
 .autocracy {
@@ -210,8 +223,8 @@ body{
 }
 
 .graph-div{
-  padding: 80px 25%;
-  margin: 80px 0;
+  padding: 40px 25%;
+  margin: 40px 0;
 /*  font-size: 20px;
   line-height: 2;*/
   background-color: #151617;
@@ -247,11 +260,12 @@ a:visited{
 /*subindexes table stles*/
 .subindexes{
   text-align: left;
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
 }
 
-.subindexes .indexName{
+.subindexes table{
+  margin: 20px 0;
 
 }
 

@@ -27,59 +27,70 @@
         </div> <!--end of nav-menu div-->
       </div> <!--end of nav div-->
     </div> <!--end of header div-->
-    <div class="page">
-      <div class="page-header">
-        <div class="page-header-narrow">
-          <!-- <img src="img/logic-board-games.png">
-          <p class="credits"><Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p> -->
+    <div class="page-header">
+      <div class="page-header-narrow">
+        <!-- <img src="img/logic-board-games.png">
+        <p class="credits"><Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p> -->
 
-          <h1 class="page-title">What is Global Innovation Index?</h1>
-          <p class="body-text">The Global Innovation Index (GII) aims to capture the multi-dimensional facets of innovation and provide the tools that can assist in tailoring policies to promote long-term output growth, improved productivity, and job growth.</p>
+        <h1 class="page-title">What is Global Innovation Index?</h1>
+        <p class="body-text">The Global Innovation Index (GII) aims to capture the multi-dimensional facets of innovation and provide the tools that can assist in tailoring policies to promote long-term output growth, improved productivity, and job growth.</p>
 
-          <p class="page-subtitle">How does Global Innovation Index compare by Political Regime?</p>
-          <svg height="400" width="600" id="plot1" id="innovation_x_prscore">
-          </svg>
-          <p class="body-text">The political regime data ranges on a scale from -10 (full autocracy) to 10 (full democracy). Democracies are distinct from autocratic countries in which political preferences cannot be expressed and citizens are not guaranteed civil liberties. Anocracies – a term used often in this entry – are regimes that fall in the middle of the spectrum of autocracies and democracies. Anocracies are countries which are not fully autocratic, but which can also not be called democratic.</p>
-          </div>
-      </div> <!--end of page-header div-->
-      <div class = "graph-div" id="innovation_x_prscore">
-        <svg height="400" width="600" id="plot2">
-      </div> <!--end of graph div-->
-      <div class="page-header">
-        <div class="page-header-wide">
-        </div><!--end of page-header-wide div-->
-      </div> <!--end of page-header div-->
-      <div class="page-header-wide">
-
-        <svg style="border: solid" height="500" width="800" id="plot3">
+        <p class="page-subtitle">How does Global Innovation Index compare by Political Regime?</p>
+        <svg height="400" width="600" id="plot1" id="innovation_x_prscore">
         </svg>
-        <div class="page-header-narrow">
-        <p class = "page-subtitle">The GII is a weighted average of seven different sub-indexes:</p>
-        </div> <!--end of page-header-narrow div-->
-        <div class="subindexes">
-            <ol>
-              <li class="indexName">Institutions</li>
-              <p class="description">Government effectiveness, regulatory quality, ease of starting a business, ease of paying taxes, etc.</p>
-              <li class="indexName">Human Capital and Research</li>
-              <p class="description">Information and communication technologies (ICTs) access, electricity output, logistics performance, GDP per unit of energy use, etc.</p>
-              <li class="indexName">Infrastructure</li>
-              <p class="description">Expenditure on education, tertiary education enrollment, gross expenditure on R&D, graduates in science and engineering, etc.</p>
-              <li class="indexName">Market Sophistication</li>
-              <p class="description">Credit access, ease of getting credit, venture capital deals, applied tariff rate, intensity of local competition, etc.</p>
-              <li class="indexName">Business Sophistication</li>
-              <p class="description">Females employed with advanced degrees, university/industry research collaboration, joint ventures and strategic alliances, foreign direct investment, etc.</p>
-              <li class="indexName">Knowledge and Technology Outputs</li>
-              <p class="description">Scientific and technical publications, patent applications, ISO 9001 quality certificates, total computer software spending, etc.</p>
-              <li class="indexName">Creative Outputs</li>
-              <p class="description">ICTs and business model creation, contribution to global entertainment and media market, generic top-level domains(gTLDs), Wikipedia yearly edits, video uploads on YouTube, etc.</p>
-            </ol>
-      </div> <!--end of page-header-wide class-->
-      <div class="footer">
-        <div class="temp-span">
-          <h3>Sources</h3>
-          <p>text: <a href="https://www.globalinnovationindex.org/about-gii">https://www.globalinnovationindex.org/about-gii</a></p>
-        </div> <!-- end of temp span footer-->
-      </div> <!--end of footer div-->
+        <p class="body-text">The political regime data ranges on a scale from -10 (full autocracy) to 10 (full democracy). Democracies are distinct from autocratic countries in which political preferences cannot be expressed and citizens are not guaranteed civil liberties. Anocracies – a term used often in this entry – are regimes that fall in the middle of the spectrum of autocracies and democracies. Anocracies are countries which are not fully autocratic, but which can also not be called democratic.</p>
+        </div>
+    </div> <!--end of page-header div-->
+    <div class = "graph-div" id="innovation_x_prscore">
+      <p class="page-subtitle">Only 1/3% of the autocratic nations are above the average innovation index versus 55% of the democratic nations</p>
+      <svg height="400" width="600" id="plot2">
+        <p class="body-text">This is some text about the graph.</p>
+    </div> <!--end of graph div-->
+    <div class="page-header-wide">
+      <div class="page-header-narrow">
+      <p class = "page-subtitle">Autocratic nations are more negatively affected on some aspects of innovation, while others not so much</p>
+      </div> <!--end of page-header-narrow div-->
+      <svg height="500" width="800" id="plot3">
+      </svg>
+      <div class="page-header-narrow">
+      <p class = "page-subtitle">The GII is a weighted average of seven different sub-indexes:</p>
+      </div> <!--end of page-header-narrow div-->
+      <div class="subindexes">
+        <table>
+          <tr>
+            <td>
+              <ol>
+                <li class="indexName">Institutions</li>
+                <p class="description">Government effectiveness, regulatory quality, ease of starting a business, ease of paying taxes, etc.</p>
+                <li class="indexName">Human Capital and Research</li>
+                <p class="description">Information and communication technologies (ICTs) access, electricity output, logistics performance, GDP per unit of energy use, etc.</p>
+                <li class="indexName">Infrastructure</li>
+                <p class="description">Expenditure on education, tertiary education enrollment, gross expenditure on R&D, graduates in science and engineering, etc.</p>
+                <li class="indexName">Market Sophistication</li>
+                <p class="description">Credit access, ease of getting credit, venture capital deals, applied tariff rate, intensity of local competition, etc.</p>
+              </ol>
+            </td>
+            <td>
+              <ol start="5">
+                <li class="indexName">Business Sophistication</li>
+                <p class="description">Females employed with advanced degrees, university/industry research collaboration, joint ventures and strategic alliances, foreign direct investment, etc.</p>
+                <li class="indexName">Knowledge and Technology Outputs</li>
+                <p class="description">Scientific and technical publications, patent applications, ISO 9001 quality certificates, total computer software spending, etc.</p>
+                <li class="indexName">Creative Outputs</li>
+                <p class="description">ICTs and business model creation, contribution to global entertainment and media market, generic top-level domains(gTLDs), Wikipedia yearly edits, video uploads on YouTube, etc.</p>
+              </ol>
+            </td>
+          </tr>
+        </table>
+    </div> <!--end of page-header-wide class-->
+    <div class="footer">
+      <div class="temp-span">
+        <h3>Sources</h3>
+        <p>text: <a href="https://www.globalinnovationindex.org/about-gii">https://www.globalinnovationindex.org/about-gii</a></p>
+        <p>Global Innovation Index data: <a href="https://www.globalinnovationindex.org/analysis-indicator">https://www.globalinnovationindex.org/analysis-indicator</a></p>
+        <p>Political regime data: <a href="https://ourworldindata.org/democracy">https://ourworldindata.org/democracy</a></p>
+      </div> <!-- end of temp span footer-->
+    </div> <!--end of footer div-->
     <div> <!--end of page div-->
   </div> <!--end of viewscreen-post div-->
 </body>
