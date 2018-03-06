@@ -4,7 +4,7 @@ var innovation_data = [];
 var innovation_x_prscore = [];
 var avgdata = {};
 
-var parseForm = function(d) {
+var parseInnov = function(d) {
 	var country = {};
 	country["Name"] = d[""];
 	country["GII"] = +d[" Global Innovation Index"];
@@ -28,8 +28,8 @@ var parseForm = function(d) {
 	innovation_data.push(country);
 }
 
-// formatYears generates the pr_data hashmap, with variables we are interested in by specific years. 
-var formatYears = function(pr){
+// formatPR generates the pr_data hashmap, with variables we are interested in by specific years. 
+var formatPR = function(pr){
 	if(pr["Year"] == "2015"){
 		var subcountry = {};
 		subcountry["Code"] = pr["Code"];
@@ -139,7 +139,7 @@ var barGraphGenerator = function (svgelement) {
 
 	var value_scale = d3.scaleLinear()
 	.domain(valuedomain)
-	.range([w_padding*1.5, (width-w_padding*2)])
+	.range([w_padding*1.9, (width-w_padding*2)])
 
 	var categories = [];
 	var pseudocategories = ["Business Sophistication", "Creative Outputs", "Human Capital and Research", "Infrastructure", "Institutions", "Knowledge Technology Variable", "Market Sophistication"]
@@ -159,27 +159,32 @@ var barGraphGenerator = function (svgelement) {
 	.range([h_padding, height-h_padding])
 	.padding(.1)
 
-	// Variable height of y-axis value 0 on graph
-	// var zp = value_scale(0)
 
 	//This code is responsible for creating the 3rd plot- using barGraphGenerator()
-	var makeBars = function (regime) {
-		categories.forEach(function (value, index) {
-			if(index % 2 == 0)
-			{		
-				var bar = plot.append("rect")
+	var makeBars = function () {
+		singlecategories.forEach(function (value, index) {
+			{	
+				var bargroup = plot.append("g").attr("class", "bargroup")
+				var bar = bargroup.append("rect")
 				.attr("class", "bar")
-				.attr("class", regime)
+				.attr("class", "autocracy")
 				.attr("x", value_scale(30))
-				.attr("y", (regime == "autocracy") ? (categories_scale(value+"_A")) : categories_scale(value))
-				.attr("width", value_scale(avgdata[regime][value]) - value_scale(30))
+				.attr("y", categories_scale(value+"_A"))
+				.attr("width", value_scale(avgdata["autocracy"][value]) - value_scale(30))
+				.attr("height", categories_scale.bandwidth())
+				
+				var bar2 = bargroup.append('rect')
+				.attr("class", "bar")
+				.attr("class", "democracy")
+				.attr("x", value_scale(30))
+				.attr("y", categories_scale(value))
+				.attr("width", value_scale(avgdata["democracy"][value]) - value_scale(30))
 				.attr("height", categories_scale.bandwidth())
 			} 
 		})
 	}
 
-	makeBars("autocracy");
-	makeBars("democracy");
+	makeBars();
 
 	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]);
 	plot.append("g")
@@ -190,12 +195,12 @@ var barGraphGenerator = function (svgelement) {
 	var pseudoCatAxis = d3.axisLeft(categories_pseudoscale).tickValues(pseudocategories).tickSize(0);
 	var categoriesAxis = d3.axisLeft(categories_scale).tickValues(singlecategories).tickSize(0);
 	plot.append("g")
-	.attr("transform", "translate("+(w_padding*1.5)+", 0)")
+	.attr("transform", "translate("+(w_padding*1.9)+", 0)")
 	.style("visibility", "hidden")
 	.call(categoriesAxis);
 	plot.append("g")
 	.attr("class", "accessLabels")
-	.attr("transform", "translate("+(w_padding*1.5)+", 0)")
+	.attr("transform", "translate("+(w_padding*1.9)+", 0)")
 	.call(pseudoCatAxis);
 }
 
@@ -365,6 +370,6 @@ var populate = function ()
 }
 
 d3.queue()
-.defer(d3.csv, "political-regime-updated2016.csv", formatYears)
-.defer(d3.csv, "Country-Data2.csv", parseForm)
+.defer(d3.csv, "political-regime-updated2016.csv", formatPR)
+.defer(d3.csv, "Country-Data2.csv", parseInnov)
 .await(populate);
