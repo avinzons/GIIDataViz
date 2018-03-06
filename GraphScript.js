@@ -186,9 +186,9 @@ var barGraphGenerator = function (svgelement) {
 				.attr("class", "bar")
 				.attr("class", "autocracy")
 				.attr("x", value_scale(30))
-				.attr("y", categories_scale(value+"_A"))
+				.attr("y", categories_scale(value+"_A")-0.2*categories_scale.bandwidth())
 				.attr("width", value_scale(avgdata["autocracy"][value]) - value_scale(30))
-				.attr("height", categories_scale.bandwidth())
+				.attr("height", 0.9*categories_scale.bandwidth())
 
 				var bar2 = bargroup.append('rect')
 				.attr("class", "bar")
@@ -196,7 +196,7 @@ var barGraphGenerator = function (svgelement) {
 				.attr("x", value_scale(30))
 				.attr("y", categories_scale(value))
 				.attr("width", value_scale(avgdata["democracy"][value]) - value_scale(30))
-				.attr("height", categories_scale.bandwidth())
+				.attr("height", 0.9*categories_scale.bandwidth())
 
 				var democrats = avgdata["democracy"][value];
 				var autocrats = avgdata["autocracy"][value];
