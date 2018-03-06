@@ -3,11 +3,13 @@ var pr_data = {};
 var innovation_data = [];
 var innovation_x_prscore = [];
 var avgdata = {};
+var percentdiff = [];
 
 var parseInnov = function(d) {
 	var country = {};
 	country["Name"] = d[""];
 	country["GII"] = +d[" Global Innovation Index"];
+	// IER, IIS, IOS turned out to be dummy data that proved uninsightful in later inspections
 	country["IER"] = +d[" Innovation Efficiency Ratio"];
 	country["IIS"] = +d[" Innovation Input Sub-index"];
 	country["IOS"] = +d[" Innovation Output Sub-index"];
@@ -135,11 +137,26 @@ var barGraphGenerator = function (svgelement) {
 	var h_padding = height*.1;
 	var w_padding = width*.1;
 
+	plot.append("text")
+	.attr("x", width-w_padding+5)
+	.attr("y", h_padding-10)
+	.style("font-size", 14)
+	.style("text-anchor", "middle")
+	.html("Percent")
+
+	plot.append("text")
+	.attr("x", width-w_padding+5)
+	.attr("y", h_padding-10)
+	.attr("dy", "1em")
+	.style("font-size", 14)
+	.style("text-anchor", "middle")
+	.html("Difference")
+
 	var valuedomain = [30, 80];
 
 	var value_scale = d3.scaleLinear()
 	.domain(valuedomain)
-	.range([w_padding*1.9, (width-w_padding*2)])
+	.range([w_padding*2.6, (width-w_padding*2)])
 
 	var categories = [];
 	var pseudocategories = ["Business Sophistication", "Creative Outputs", "Human Capital and Research", "Infrastructure", "Institutions", "Knowledge Technology Variable", "Market Sophistication"]
@@ -172,7 +189,7 @@ var barGraphGenerator = function (svgelement) {
 				.attr("y", categories_scale(value+"_A"))
 				.attr("width", value_scale(avgdata["autocracy"][value]) - value_scale(30))
 				.attr("height", categories_scale.bandwidth())
-				
+
 				var bar2 = bargroup.append('rect')
 				.attr("class", "bar")
 				.attr("class", "democracy")
@@ -180,27 +197,43 @@ var barGraphGenerator = function (svgelement) {
 				.attr("y", categories_scale(value))
 				.attr("width", value_scale(avgdata["democracy"][value]) - value_scale(30))
 				.attr("height", categories_scale.bandwidth())
+
+				var democrats = avgdata["democracy"][value];
+				var autocrats = avgdata["autocracy"][value];
+				console.log()
+				percentdiff.push(d3.format(".0%")(Math.round(((democrats/autocrats)*100)-100)/100))
 			} 
 		})
 	}
 
 	makeBars();
+	
+	var pdiffscale = d3.scaleBand()
+	.domain(percentdiff.map(function (d) { return d; }))
+	.range([h_padding, height-h_padding])
+	.padding(.1)
 
-	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]);
+	var pdiffAxis = d3.axisRight(pdiffscale).tickSize(0);
+	plot.append("g")
+	.attr("transform", "translate("+(width-w_padding)+",0)")
+	.attr("stroke-width", 0)
+	.style("text-anchor", "middle")
+	.call(pdiffAxis)
+
+	var valueAxis = d3.axisTop(value_scale).tickValues([30,40,50,60,70,80]).tickSize(2);
 	plot.append("g")
 	.attr("transform", "translate(0,"+(h_padding)+")")
-	.style("stroke-width", 0)
 	.call(valueAxis);
 
 	var pseudoCatAxis = d3.axisLeft(categories_pseudoscale).tickValues(pseudocategories).tickSize(0);
 	var categoriesAxis = d3.axisLeft(categories_scale).tickValues(singlecategories).tickSize(0);
 	plot.append("g")
-	.attr("transform", "translate("+(w_padding*1.9)+", 0)")
+	.attr("transform", "translate("+(w_padding*2.6)+", 0)")
 	.style("visibility", "hidden")
 	.call(categoriesAxis);
 	plot.append("g")
 	.attr("class", "axisLabels")
-	.attr("transform", "translate("+(w_padding*1.9)+", 0)")
+	.attr("transform", "translate("+(w_padding*2.6)+", 0)")
 	.call(pseudoCatAxis);
 }
 
@@ -213,6 +246,10 @@ var populate = function ()
 	avgPolarRegimes(avgScore);
 	var ixpgraph = function (graphID, binary) { // this is the code for the first plot
 		var plot1 = d3.select("#"+graphID);
+		plot1.append("text")
+		.attr("id", "CountryName")
+		.attr("x", 50)
+		.attr("y", 50)
 	
 		var height = +plot1.attr("height");
 		var width = +plot1.attr("width");
@@ -307,10 +344,10 @@ var populate = function ()
 					.attr("cx", (country["Score"] >= 6) ? (pr_scale(country["Score"]) + Math.random()*(width*.02)) : (pr_scale(country["Score"])))
 					.attr("cy", GII_scale(country["GII"]))
 					.style("fill", colorScalePR(country["Score"]))
-					.style("opacity", (!binary ) ? (.8) : ( (Math.abs(country["Score"])<6 || country["GII"]<avgScore)?(0.2): (0.8) ));
-					// .on("mouseover", function () {
-					// 	plot1.select("#CountryName").text(country["Name"]);
-					// })
+					.style("opacity", (!binary ) ? (.8) : ( (Math.abs(country["Score"])<6 || country["GII"]<avgScore)?(0.2): (0.8) ))
+					.on("mouseover", function () {
+						plot1.select("#CountryName").text(country["Name"]);
+					})
 					
 					if(textLabels.includes(country["Name"])){
 						//highlight country point

@@ -50,8 +50,22 @@
 }*/
 
 /*Plot 3*/
-#plot3{
+#plot3 .axisLabels{
   text-anchor: end;
+  font-size: 14px;
+  font-family: "Inconsolata";
+}
+
+#plot3 .tick{
+  font-size: 14px;
+  font-family: "Inconsolata";
+}
+
+#plot3 text{
+  fill: #898989;
+}
+#plot3 .bargroup{
+  padding: 0px 10px 10px 10px;
 }
 
 .autocracy {
