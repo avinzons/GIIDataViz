@@ -48,6 +48,9 @@
 }*/
 
 /*Plot 3*/
+#plot3{
+  text-anchor: end;
+}
 .autocracy {
   fill: #C42E23;
   stroke: none;

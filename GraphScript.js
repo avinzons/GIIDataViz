@@ -199,7 +199,7 @@ var barGraphGenerator = function (svgelement) {
 	.style("visibility", "hidden")
 	.call(categoriesAxis);
 	plot.append("g")
-	.attr("class", "accessLabels")
+	.attr("class", "axisLabels")
 	.attr("transform", "translate("+(w_padding*1.9)+", 0)")
 	.call(pseudoCatAxis);
 }
