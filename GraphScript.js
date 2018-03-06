@@ -335,7 +335,8 @@ var populate = function ()
 		}
 		
 		//labels for highlighted countries
-		var textLabels = ["Singapore", "Yemen", "United States", "Switzerland"];
+		var textLabels1 = ["Singapore", "Yemen", "United States", "Switzerland"];
+		var textLabels2 = ["Switzerland", "United States", "China", "United Arab Emirates", "Vietnam", "Qatar"];
 		innovation_x_prscore.forEach(function (country) {
 
 					plot1.append("circle")
@@ -345,46 +346,87 @@ var populate = function ()
 					.attr("cy", GII_scale(country["GII"]))
 					.style("fill", colorScalePR(country["Score"]))
 					.style("opacity", (!binary ) ? (.8) : ( (Math.abs(country["Score"])<6 || country["GII"]<avgScore)?(0.2): (0.8) ))
-					.on("mouseover", function () {
-						plot1.select("#CountryName").text(country["Name"]);
-					})
-					
-					if(textLabels.includes(country["Name"])){
-						//highlight country point
-						plot1.select("#"+country["Name"])
-						.attr("stroke", "#fff")
-						.attr("stroke-width", 2);	
-	
-						if(country["Name"] == "Singapore"){
-						var xBuffer = 13;
+					.attr("stroke", (binary && (textLabels2.includes(country["Name"])) || !binary && textLabels1.includes(country["Name"]))? ("#fff") : ("none"))
+					.attr("stroke-width", (binary && (textLabels2.includes(country["Name"])) || !binary && textLabels1.includes(country["Name"]))? ("2") : ("0"));
+					// .on("mouseover", function () {
+					// 	plot1.select("#CountryName").text(country["Name"]);
+					// })
+					if(!binary){
+						if(textLabels1.includes(country["Name"])){
+							console.log("#"+country["Name"]);	
+		
+							if(country["Name"] == "Singapore"){
+							var xBuffer = 13;
+							}
+		
+							if(country["Name"] == "Yemen"){
+							var xBuffer = 8;
+							};
+		
+							if(country["Name"] == "Switzerland"){
+							var xBuffer = 18;
+							}
+		
+							if(country["Name"] == "United States"){	
+							var xBuffer = 22;
+							}
+							plot1.append("text")
+							.attr("class", "graphLabels")
+							.text(country["Name"])
+							.attr("x", pr_scale(country["Score"])-xBuffer*7)
+							.attr("y", GII_scale(country["GII"])+4);
+		
+							plot1.append("line")
+							.attr("x1", pr_scale(country["Score"])-8)
+							.attr("x2", pr_scale(country["Score"])-xBuffer*2)
+							.attr("y1", GII_scale(country["GII"]))
+							.attr("y2", GII_scale(country["GII"]));	
+						}	
+					}	
+					else{
+						if(textLabels2.includes(country["Name"])){
+							//highlight country point
+							plot1.select("#"+country["Name"])
+							.attr("stroke", "#fff")
+							.attr("stroke-width", 2);	
+		
+							if(country["Name"] == "China"){
+							var xBuffer = -3;
+							}
+		
+							if(country["Name"] == "Qatar"){
+							var xBuffer = -3;
+							};
+
+							if(country["Name"] == "Vietnam"){
+							var xBuffer = -3;
+							};
+
+							if(country["Name"] == "United Arab Emirates"){
+							var xBuffer = -3;
+							};
+		
+							if(country["Name"] == "Switzerland"){
+							var xBuffer = 18;
+							}
+		
+							if(country["Name"] == "United States"){	
+							var xBuffer = 22;
+							}
+							plot1.append("text")
+							.attr("class", "graphLabels")
+							.text(country["Name"])
+							.attr("x", pr_scale(country["Score"])-xBuffer*7)
+							.attr("y", GII_scale(country["GII"])+4);
+		
+							plot1.append("line")
+							.attr("x1", (country["Score"]<0)?(pr_scale(country["Score"])-8) : (pr_scale(country["Score"])+8))
+							.attr("x2", (country["Score"] > 0) ? (pr_scale(country["Score"])-xBuffer*2) : (pr_scale(country["Score"])+xBuffer*2))
+							.attr("y1", GII_scale(country["GII"]))
+							.attr("y2", GII_scale(country["GII"]));
 						}
-	
-						if(country["Name"] == "Yemen"){
-						var xBuffer = 8;
-						};
-	
-						if(country["Name"] == "Switzerland"){
-						var xBuffer = 18;
-						}
-	
-						if(country["Name"] == "United States"){	
-						var xBuffer = 22;
-						}
-						plot1.append("text")
-						.attr("class", "graphLabels")
-						.text(country["Name"])
-						.attr("x", pr_scale(country["Score"])-xBuffer*7)
-						.attr("y", GII_scale(country["GII"])+4);
-	
-						plot1.append("line")
-						.attr("x1", pr_scale(country["Score"])-8)
-						.attr("x2", pr_scale(country["Score"])-xBuffer*2)
-						.attr("y1", GII_scale(country["GII"]))
-						.attr("y2", GII_scale(country["GII"]));		
-	
-						//Unied States plot is hidden
-						plot1.select("#United States")
-						.attr("z-index", 100);}
+
+					}
 		
 					//This is used to differentiate plot1 from plot2 without having to repeat all the code	
 					if(binary)	
