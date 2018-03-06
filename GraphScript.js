@@ -159,8 +159,8 @@ var barGraphGenerator = function (svgelement) {
 	.range([w_padding*2.6, (width-w_padding*2)])
 
 	var categories = [];
-	var pseudocategories = ["Business Sophistication", "Creative Outputs", "Human Capital and Research", "Infrastructure", "Institutions", "Knowledge Technology Variable", "Market Sophistication"]
-	var singlecategories = ["BS_V", "CO_V", "HCR_V", "Infrastructure_V", "Institutions_V", "KTO_V", "MS_V"];
+	var pseudocategories = ["Creative Outputs", "Institutions", "Human Capital and Research", "Business Sophistication", "Market Sophistication", "Infrastructure", "Knowledge Technology Variable"]
+	var singlecategories = ["CO_V", "Institutions_V", "HCR_V", "BS_V", "MS_V", "Infrastructure_V", "KTO_V"];
 	singlecategories.forEach(function (d) {
 		categories.push(d);
 		categories.push(d+"_A")
